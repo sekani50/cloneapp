@@ -1,5 +1,6 @@
 import { AboutSection } from "./_components/AboutSection";
 import { ClientsSection } from "./_components/ClientSection";
+import { ContactSection } from "./_components/ContactSection";
 import { Footer } from "./_components/Footer";
 import { Header } from "./_components/Headers";
 import { HeroSection } from "./_components/HeroSection";
@@ -16,6 +17,7 @@ export default function LandingPage() {
       <AboutSection />
       <MissionSection />
       <ClientsSection />
+      <ContactSection />
       <Footer />
     </main>
   )
