@@ -33,8 +33,28 @@ export function ContactSection() {
     setIsSubmitting(true)
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
+      const response = await fetch('https://staging.donkeysign.io/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          service: formData.service,
+          message: formData.message,
+          subject: `Contact Form Submission from ${formData.name}`,
+          source: 'JRWA Landing Page'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      // Reset form on success
       setFormData({
         name: "",
         email: "",
@@ -45,10 +65,11 @@ export function ContactSection() {
       })
       
       setSubmitStatus("success")
-      setTimeout(() => setSubmitStatus("idle"), 3000)
+      setTimeout(() => setSubmitStatus("idle"), 5000)
     } catch (error) {
+      console.error('Error sending email:', error)
       setSubmitStatus("error")
-      setTimeout(() => setSubmitStatus("idle"), 3000)
+      setTimeout(() => setSubmitStatus("idle"), 5000)
     } finally {
       setIsSubmitting(false)
     }
